@@ -1,10 +1,9 @@
 import React from 'react';
+import TaskList from '../src/taskList';
 
 const Home: React.FC = () => {
     return(
-        <div>
-          <h1>pagina HOME</h1>
-        </div>
+      <TaskList/>
     );
 }
 

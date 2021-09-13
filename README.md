@@ -5,8 +5,11 @@ npm run dev.
 
 abra na pagina web http://localhost:5000.
 
-### INSTALANDO DEPENDENCIAS
+### Instalando Dependencias
 
-@material-ui/core, axios, react-icons, styled-components e typescript. 
+@material-ui/core, axios, react-icons, styled-components, typescript,
+react-router-dom, react-hook-form, @hookform/resolvers e yup. 
 
-### Testando rotas nas pages do Next
+### Implementando rotas nas pages
+
+### Criando e testando GET, POST, PUT E DELETE.

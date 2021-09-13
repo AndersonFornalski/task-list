@@ -1,8 +1,10 @@
- import axios from 'axios';
  import React, { useEffect, useState } from 'react';
  import {Typography, IconButton, Avatar,
-         CardActions, CardContent, CardHeader, Card } from '@material-ui/core';
+         CardActions, CardContent, CardHeader, Card, Button } from '@material-ui/core';
  import { MdFavorite, MdShare, MdExpandMore, MdMoreVert } from 'react-icons/md';
+ import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
+import Api from '../services/api';
 
  interface Task {
      guid: string,
@@ -13,19 +15,29 @@
  
  const TaskList: React.FC = () => {         
        const [ tasks, setTasks ] = useState<Task[]>([]);
+       const router = useRouter();
  
  useEffect(() => {    
      getAll()
  },[]);
  
  async function getAll(){
-   const response = await axios.get("https://chronos.compraqui.app/api/tasks");
+   const response = await Api.get("/tasks");
    console.log(response)
    setTasks(response.data);
  };
  function newTask(){
-     alert('nova tarefa')
+    router.push('/tarefa');
  };
+
+ function editTask(guid: string) { 
+    router.push(`/tarefa/${guid}`)
+};
+
+async function deleteTask(guid: string){
+  await Api.delete(`/tasks/${guid}`)
+  getAll()
+};
  
  return (
      <div>
@@ -33,24 +45,26 @@
       <Card key={item.guid} >
           <CardHeader
               avatar={
-          <Avatar onClick={newTask} aria-label="recipe" >
-              +
+          <Avatar>
+              ++
           </Avatar>
               }
           action={
           
-          <IconButton  aria-label="settings">
+            <IconButton onClick={() => editTask(item.guid)} aria-label="settings">
             <MdMoreVert className="iconMore" />
           </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={ item.title}
+          subheader={item.description}
       />
       <CardContent>
-          <Typography variant="body2" color="textPrimary" component="p" >
-            <h1>{ item.title}</h1>
-            <h3>{ item.description}</h3>
-          </Typography>
+        <h1>{ item.title}</h1>
+        <h3>{ item.description}</h3>
+         
+            <Button onClick={newTask}variant='contained' color='primary'>NOVA TAREFA</Button>{' '} 
+        
+            <Button onClick={() => deleteTask(item.guid)} variant='contained' color='secondary'>EXCLUIR</Button>         
       </CardContent>
       <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
@@ -65,6 +79,7 @@
       </CardActions>
      </Card>
      ))} 
+        <Button onClick={newTask} variant='contained' color='primary'>NOVA TAREFA</Button> 
      </div>
    );
  }
