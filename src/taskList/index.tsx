@@ -1,39 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {IconButton, Typography, CardContent, CardHeader, 
-Card, Button, Menu, Fade, MenuItem } from '@material-ui/core';
-import { MdDelete, MdEdit, MdMoreVert } from 'react-icons/md';
+import {IconButton, CardHeader, Card, Button, Menu, Fade, MenuItem } from '@material-ui/core';
+import { MdCheck, MdDelete, MdEdit, MdMoreVert, MdSupervisorAccount } from 'react-icons/md';
 import { useRouter } from 'next/dist/client/router';
 import Api from '../services/api';
-//import useStyle from './styles';
-import { makeStyles, Theme, createStyles } from "@material-ui/core";
-import { blue, purple } from "@material-ui/core/colors";
-
-
-const useStyle = makeStyles((theme: Theme) =>
-createStyles({
-    root: {
-      maxWidth: '400px',
-      height: '100px',
-      color: purple[300],
-      backgroundColor: blue[800],
-      marginBottom:'20px',
-      borderRadius:'30px',
-      fontWeight:'bolder'
-    },
-    
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-  }),
-);
+import useStyle from './styles';
 
 interface Task {
      guid: string,
@@ -79,9 +49,9 @@ const handleClose = () => {
 };
  
  return (
-     <div>
+     <>
      {tasks.map(item => (
-      <Card key={item.guid} >
+      <Card key={item.guid} className={classes.root}>
           <CardHeader
           action={          
           <IconButton onClick={handleClick} aria-label="settings" aria-controls="long-menu" aria-haspopup="true" >
@@ -90,15 +60,20 @@ const handleClose = () => {
           }
           title={ item.title}
           subheader={item.description}
-      />
+      />  
+      {item.situation == 'completed' && 
+        <Button  className={classes.button}><MdCheck/>&nbsp;Concluido</Button> ||
+        item.situation == 'uncompleted' && 
+        <Button  className={classes.button}> Em progresso</Button>
+      }
       <Menu id="fade-menu" anchorEl={menuButton} keepMounted open={open} onClose={handleClose} TransitionComponent={Fade}>
-        <MenuItem onClick={() => editTask(item.guid)}><MdEdit color='primary'/>&nbsp;Editar Tarefa</MenuItem>
+        <MenuItem onClick={() => editTask(item.guid)}><MdEdit color='primary'/>&nbsp;Editar Tarefa</MenuItem>{' '}
         <MenuItem onClick={() => deleteTask(item.guid)}><MdDelete color='primary'/>&nbsp;Excluir tarefa</MenuItem>
       </Menu>
      </Card>
      ))} 
         <Button onClick={newTask} variant='contained' color='primary'>NOVA TAREFA</Button> 
-     </div>
+     </>
    );
  }
  

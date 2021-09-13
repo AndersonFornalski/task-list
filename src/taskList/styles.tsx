@@ -1,28 +1,23 @@
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
-import { blue, purple } from "@material-ui/core/colors";
 
 const useStyle = makeStyles((theme: Theme) =>
 createStyles({
-    root: {
+    root: {      
+      marginTop:'20px',
       maxWidth: '400px',
-      height: '100px',
-      color: purple[300],
-      backgroundColor: blue[800],
+      height: '150px',
+      color: 'white',
+      backgroundColor: '#2740e0',
       marginBottom:'20px',
-      borderRadius:'30px',
-      fontWeight:'bolder'
+      borderRadius:'20px',
+      fontWeight:'bolder',
     },
     
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
+    button: {
+        color: 'black',
+        backgroundColor: '#cfd0da',
+        marginLeft: '15px',
+        borderRadius:'10px',
     },
   }),
 );

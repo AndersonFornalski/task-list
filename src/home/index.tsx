@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { MdMenu,MdChevronLeft, MdChevronRight, MdInbox, MdMail, } from 'react-icons/md';
+import React, { useState } from 'react';
+import { MdMenu,MdChevronLeft, MdChevronRight, MdInbox, MdMail, MdSupervisorAccount, } from 'react-icons/md';
 import useStyles from './styles';
 
 import clsx from 'clsx';
@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-//import TaskList from '../taskList';
+import TaskList from '../taskList';
 
 
 const Home: React.FC = () => {
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
             <MdMenu />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            LISTA DE TAREFAS
           </Typography>
         </Toolbar>
       </AppBar>
@@ -63,15 +63,16 @@ const Home: React.FC = () => {
         classes={{
           paper: classes.drawerPaper,
         }}
-      >
+        >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <MdChevronLeft /> : <MdChevronRight />}
           </IconButton>
         </div>
        
+        <MdSupervisorAccount className={classes.icon}/>
         <List>
-          {['TAREFAS', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Tarefas', 'Sobre'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <MdInbox /> : <MdMail />}</ListItemIcon>
               <ListItemText primary={text} />
@@ -86,10 +87,7 @@ const Home: React.FC = () => {
         })}
       >
         <div className={classes.drawerHeader} />
-        {/**
-         * 
         <TaskList/>         
-         * **/}
       </main>
     </div>
   );

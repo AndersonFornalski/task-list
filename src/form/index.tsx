@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Button, Dialog, DialogContent, DialogTitle, 
-         FormControl, FormControlLabel, Input, Radio, RadioGroup } from '@material-ui/core';
+         FormControl, FormControlLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
 import Api from '../services/api';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/dist/client/router';
+import useStyles from './style';
 
 interface Task {
     guid: string,
@@ -27,7 +28,8 @@ const TaskForm: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<Task>({
         resolver: yupResolver(schema)
     });
-    const [open, setOpen] = useState(true);
+    const classes = useStyles();
+    const [ open, setOpen ] = useState(true);
     const router = useRouter();
     const [ model, setModel ] = useState<Task>({
     guid:'',
@@ -35,16 +37,13 @@ const TaskForm: React.FC = () => {
     description:'',
     situation:''
     });
-function handleOnChange (e: ChangeEvent<HTMLInputElement>){
-        setModel({
-            ...model,
-            [e.target.name] : e.target.value
-        })
-    };
-
-const formSubmitHandler: SubmitHandler<Task> = async () => {
-        await Api.post('/tasks', model)
-        closeModal()
+const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setModel({ ...model, [e.target.name] : e.target.value})
+};
+const formSubmitHandler: SubmitHandler<Task> = 
+async () => {
+    await Api.post('/tasks', model)
+    closeModal()
 };
 
 const backlist = () => {
@@ -58,31 +57,33 @@ const closeModal = () => {
     return(
         <>
        <Dialog open={open} aria-labelledby="form-dialog-title" maxWidth="sm">
-        <DialogTitle id="form-dialog-title"> TAREFAS </DialogTitle>
+        <DialogTitle id="form-dialog-title"> NOVA TAREFA </DialogTitle>
         <DialogContent>  
-        <form onSubmit={handleSubmit(formSubmitHandler)}>
+        <form onSubmit={handleSubmit(formSubmitHandler)} className={classes.root}>
             <div>
-            <input 
+            <TextField 
                 {...register('title')}                
-                placeholder="TITLE"
+                label="TITULO"
+                variant="outlined"
                 type="text" 
                 name="title"
                 value={model.title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
                 />{' '}
             </div>
-                {errors.title && errors.title?.message && <small style={{color:"red"}}>{errors.title.message}</small>}
+                {errors.title && errors.title?.message && <small style={{color:"red", marginRight: '10px'}}>{errors.title.message}</small>}
             <div>
-            <Input 
+            <TextField 
                 {...register('description')}
-                placeholder="DESCRIPTION"
+                label="DESCRICAO"
+                variant="outlined"
                 type="text" 
                 name="description" 
                 value={model.description}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
                 />{' '}
              </div>
-                  {errors.description && errors.description?.message && <small style={{color:"red"}}>{errors.description.message}</small>}
+                  {errors.description && errors.description?.message && <small style={{color:"red", marginRight: '10px'}}>{errors.description.message}</small>}
               <div>
                 <FormControl component="fieldset">
                     <RadioGroup                         
