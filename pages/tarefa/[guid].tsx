@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { MdLabel } from 'react-icons/md';
 import { useRouter } from 'next/dist/client/router';
 import TaskList from '../../src/taskList';
+import Home from '../../src/home';
 
 interface Task {
     guid: string,
@@ -79,7 +80,7 @@ const closeModal = () => {
 
     return(
         <>
-       <TaskList/>                                                                                                                                                                                                                                                                      
+        <Home/>                                                                                                                                                                                                                                                                      
        <Dialog open={open} aria-labelledby="form-dialog-title" maxWidth="sm">
         <DialogTitle id="form-dialog-title"> EDITAR TAREFAS </DialogTitle>
         <DialogContent>  

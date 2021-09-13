@@ -1,9 +1,24 @@
-import { createGlobalStyle } from 'styled-components';
+import React from 'react';
 
-export default createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-`
+const createGlobalStyle: React.FC = () => {
+    return(
+        <div>
+
+        </div>
+    );
+}
+
+export default createGlobalStyle;
+
+/**
+ * 
+ import { createGlobalStyle } from 'styled-components';
+ 
+ export default createGlobalStyle`
+   *{
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+ `
+ * **/

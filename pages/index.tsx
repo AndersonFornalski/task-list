@@ -1,11 +1,8 @@
 import React from 'react';
-import TaskList from '../src/taskList';
+import Home from '../src/home';
 
-const Home: React.FC = () => {
-    return(
-      <TaskList/>
-    );
+const Index: React.FC = () => {
+  return <Home/>
 }
 
-export default Home;
-
+export default Index;

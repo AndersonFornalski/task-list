@@ -48,7 +48,7 @@ const formSubmitHandler: SubmitHandler<Task> = async () => {
 };
 
 const backlist = () => {
-    router.push('/lista')   
+    router.push('/')   
 };
 const closeModal = () => {
     setOpen(false)
