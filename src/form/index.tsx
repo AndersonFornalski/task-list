@@ -4,9 +4,9 @@ import { Button, Dialog, DialogContent, DialogTitle,
 import Api from '../services/api';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useRouter } from 'next/dist/client/router';
 import useStyles from './style';
+import validation from '../components/validation';
 
 interface Task {
     guid: string,
@@ -14,19 +14,9 @@ interface Task {
     description: string
     situation: string
 }
-
-const schema = yup.object().shape({
-    title: yup.string().min(4,"minimo 4 caracters")
-                       .max(30, "maximo 10 caracteres")
-                       .required("texto obrigatorio"),
-
-    description: yup.string().min(5,"minimo 5 caracters")
-                             .required(),
-  });
-
 const TaskForm: React.FC = () => { 
     const { register, handleSubmit, formState: { errors } } = useForm<Task>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(validation)
     });
     const classes = useStyles();
     const [ open, setOpen ] = useState(true);
@@ -57,13 +47,13 @@ const closeModal = () => {
     return(
         <>
        <Dialog open={open} aria-labelledby="form-dialog-title" maxWidth="sm">
-        <DialogTitle id="form-dialog-title"> NOVA TAREFA </DialogTitle>
+        <DialogTitle id="form-dialog-title"> Criar tarefa </DialogTitle>
         <DialogContent>  
         <form onSubmit={handleSubmit(formSubmitHandler)} className={classes.root}>
             <div>
             <TextField 
                 {...register('title')}                
-                label="TITULO"
+                label="Nome da tarefa"
                 variant="outlined"
                 type="text" 
                 name="title"
@@ -75,7 +65,7 @@ const closeModal = () => {
             <div>
             <TextField 
                 {...register('description')}
-                label="DESCRICAO"
+                label="Descrição da tarefa"
                 variant="outlined"
                 type="text" 
                 name="description" 
@@ -105,8 +95,8 @@ const closeModal = () => {
                     </RadioGroup>       
                 </FormControl>            
               </div>
-            <Button variant="contained" color="primary" onClick={closeModal} >Cancelar</Button>{' '}      
-            <Button variant="contained" color="primary" type="submit">Salvar</Button>      
+            <Button color="primary" onClick={closeModal} >Cancelar</Button>{' '}      
+            <Button color="primary" type="submit">Salvar</Button>      
         </form>
         </DialogContent>
       </Dialog>

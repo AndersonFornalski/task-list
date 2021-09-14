@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
-import { MdMenu,MdChevronLeft, MdChevronRight, MdInbox, MdMail, MdSupervisorAccount, } from 'react-icons/md';
+import { Avatar, Button, Divider, ListItemAvatar, ListItemText, ListItem, IconButton, 
+         List, Toolbar, AppBar, CssBaseline, Drawer, useTheme } from '@material-ui/core';
+import { MdMenu,MdChevronLeft, MdChevronRight, MdInfo, MdAccountCircle,} from 'react-icons/md';
+import { ImListNumbered } from 'react-icons/im';
 import useStyles from './styles';
-
 import clsx from 'clsx';
-import { useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import TaskList from '../taskList';
-
+import { useRouter } from 'next/dist/client/router';
 
 const Home: React.FC = () => {
+  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -41,7 +33,6 @@ const Home: React.FC = () => {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -49,9 +40,6 @@ const Home: React.FC = () => {
           >
             <MdMenu />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            LISTA DE TAREFAS
-          </Typography>
         </Toolbar>
       </AppBar>
 
@@ -70,24 +58,48 @@ const Home: React.FC = () => {
           </IconButton>
         </div>
        
-        <MdSupervisorAccount className={classes.icon}/>
-        <List>
-          {['Tarefas', 'Sobre'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <MdInbox /> : <MdMail />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>       
+        <List >
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                <MdAccountCircle />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText>
+              <div className={classes.textAvatar}>Nome</div>
+              <div className={classes.textAvatar2}>Função</div>
+            </ListItemText>
+          </ListItem>
+        </List>
+        <Divider className={classes.divider}/>
+
+        <List>          
+        <ListItem>
+           <Button 
+              className={classes.list} 
+              onClick={() => router.push('/')} 
+              color='secondary'> 
+              <ImListNumbered className={classes.iconList}/>Tarefas
+           </Button> 
+        </ListItem>  
+        <ListItem>
+          <Button
+              className={classes.list} 
+              onClick={() => router.push('/')} 
+              color='secondary'> 
+              <MdInfo className={classes.iconList}/>Sobre
+          </Button> 
+        </ListItem>  
+        </List>   
       </Drawer>
       
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
-      >
+        >
         <div className={classes.drawerHeader} />
-        <TaskList/>         
+          <TaskList/>         
       </main>
     </div>
   );

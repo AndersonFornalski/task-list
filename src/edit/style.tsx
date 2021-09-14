@@ -9,6 +9,10 @@ createStyles({
     },
     textAlign: 'right',
   },
+  error:{
+    color:"red",
+    marginRight: 10,
+  },
 }),
 );
 

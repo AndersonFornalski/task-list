@@ -4,10 +4,11 @@ import { Button, Dialog, DialogContent, DialogTitle,
 import Api from '../../src/services/api';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useRouter } from 'next/dist/client/router';
 import Home from '../../src/home';
 import useStyles from './style';
+import validation from '../components/validation';
+
 
 interface Task {
     guid: string,
@@ -15,19 +16,9 @@ interface Task {
     description: string
     situation: string
 }
-
-const schema = yup.object().shape({
-    title: yup.string().min(4,"minimo 4 caracters")
-                       .max(30, "maximo 10 caracteres")
-                       .required("texto obrigatorio"),
-
-    description: yup.string().min(5,"minimo 5 caracters")
-                             .required(),
-  });
-
 const Edit: React.FC = () => { 
     const { register, handleSubmit, formState: { errors } } = useForm<Task>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(validation)
     });
     const [open, setOpen] = useState(true);
     const classes = useStyles();
@@ -77,17 +68,17 @@ const closeModal = () => {
     backlist()
 }
 
-    return(
+return(
         <>
        <Home/>                                                                                                                                                                                                                                                                      
        <Dialog open={open} aria-labelledby="form-dialog-title" maxWidth="sm">
-        <DialogTitle id="form-dialog-title"> EDITAR TAREFA </DialogTitle>
+        <DialogTitle id="form-dialog-title"> Editar tarefa </DialogTitle>
         <DialogContent> 
         <form onSubmit={handleSubmit(formSubmitHandler)} className={classes.root} >
             <div>
             <TextField 
                 {...register('title')}
-                label="TITULO"
+                label="Nome da tarefa"
                 variant="outlined"                
                 type="text" 
                 name="title"
@@ -95,11 +86,12 @@ const closeModal = () => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
                 />{' '}
             </div>
-                {errors.title && errors.title?.message && <small style={{color:"red", marginRight: '10px'}}>{errors.title.message}</small>}
+                {errors.title && errors.title?.message && 
+                    <small className={classes.error}>{errors.title.message}</small>}
             <div>
             <TextField 
                 {...register('description')}
-                label="DESCRICAO"
+                label="Descrição da tarefa"
                 variant="outlined"
                 type="text" 
                 multiline
@@ -109,14 +101,15 @@ const closeModal = () => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
                 />{' '}
              </div>
-                  {errors.description && errors.description?.message && <small style={{color:"red", marginRight: '10px'}}>{errors.description.message}</small>}
+                  {errors.description && errors.description?.message && 
+                    <small className={classes.error}>{errors.description.message}</small>}
               <div>
                 <FormControl component="fieldset">
                     <RadioGroup                         
                         name="situation" 
                         value={model.situation} 
                         onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}>
-                    <FormControlLabel value="completed" control={<Radio />} label="Completa" />
+                    <FormControlLabel value="completed" control={<Radio />} label="Concluído" />
                     </RadioGroup>
                 </FormControl>
 
@@ -125,12 +118,12 @@ const closeModal = () => {
                         name="situation" 
                         value={model.situation} 
                         onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}>
-                    <FormControlLabel value="uncompleted" control={<Radio />} label="Incompleta" />
+                    <FormControlLabel value="uncompleted" control={<Radio />} label="Em progresso" />
                     </RadioGroup>  
                 </FormControl>            
               </div>
-            <Button variant="contained" color="primary" onClick={closeModal} >Cancelar</Button>{' '}      
-            <Button variant="contained" color="primary" type="submit">Salvar</Button>
+            <Button color="primary" onClick={closeModal} >Cancelar</Button>{' '}      
+            <Button color="primary" type="submit">Salvar</Button>
         </form>
         </DialogContent>
       </Dialog>

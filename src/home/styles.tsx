@@ -8,11 +8,32 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
     },
+    avatar:{
+      width: theme.spacing(8),
+      height: theme.spacing(8),
+      fontSize: 80,
+      backgroundColor:'#1c35da',
+    },
+    textAvatar:{
+      fontSize: 20,
+      marginLeft: 10,
+    },
+    textAvatar2:{
+      marginLeft: 10,
+    },
+    divider:{
+      backgroundColor:'white',
+      width: 150,
+      marginLeft: 20,
+    },
+    
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      backgroundColor: 'white',
+      boxShadow:'none',
     },
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -20,10 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
-      }),
+      }),      
     },
     menuButton: {
       marginRight: theme.spacing(2),
+      fontSize: 30,
+      color: 'black',
     },
     hide: {
       display: 'none',
@@ -31,16 +54,27 @@ const useStyles = makeStyles((theme: Theme) =>
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
+      
     },
     drawerPaper: {
       width: drawerWidth,
       backgroundColor: '#1c35da',
       color: 'white', 
     },
+    list:{
+      textTransform: 'capitalize',
+      fontSize: 20,
+    },
     icon:{
       fontSize: '4rem',
-      marginLeft: '50px ',
-      
+      marginLeft: '20px ',
+    },
+    iconList:{
+      marginRight: 30,
+      fontSize: 20,
+    },
+    header:{
+       
     },
     drawerHeader: {
       display: 'flex',
@@ -49,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
+      
     },
     content: {
       flexGrow: 1,

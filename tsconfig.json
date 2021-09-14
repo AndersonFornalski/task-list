@@ -22,8 +22,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "reactStrictMode.js"  ],
+ ],
   "exclude": [
     "node_modules"
   ]
 }
+//"reactStrictMode.js" 
