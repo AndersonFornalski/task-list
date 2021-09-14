@@ -12,6 +12,7 @@ createStyles({
       fontWeight:'bolder',
     },
     button: {
+      textTransform:'initial',
       color: 'black',
       backgroundColor: '#cfd0da',
       marginLeft: 15,
@@ -35,16 +36,21 @@ createStyles({
     iconButton: {
       padding: 10,
     },
+    iconToggle:{
+      color:'white',
+    },
     description:{
       marginLeft: 15,
       marginRight: 15,
       display: 'flex',
+      width: 300,
     },
     newBtn:{
       padding: 15,
       marginTop: 100,
       marginLeft: 210,
       borderRadius: 10,
+
     },   
     tarefas:{
       marginRight: 250,
@@ -52,9 +58,6 @@ createStyles({
       fontSize:'2rem',
       fontWeight:'bolder',
     },    
-    subheader:{
-      color:'white',
-    }
   }),
 );
 export default useStyle;

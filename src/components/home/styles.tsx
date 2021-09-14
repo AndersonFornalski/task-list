@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(8),
       fontSize: 80,
       backgroundColor:'#1c35da',
+      cursor: 'pointer',
     },
     textAvatar:{
       fontSize: 20,
@@ -67,11 +68,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon:{
       fontSize: '4rem',
-      marginLeft: '20px ',
+      marginLeft: 20,
     },
     iconList:{
       marginRight: 30,
-      fontSize: 20,
+      fontSize: 25,
     },
     header:{
        

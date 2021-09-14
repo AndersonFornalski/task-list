@@ -1,26 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, Dialog, DialogContent, DialogTitle, 
          FormControl, FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
-import Api from '../../src/services/api';
+import Api from '../../services/api';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/dist/client/router';
-import Home from '../../src/home';
+import Home from '../home';
+import { Task } from '../../services/interface'
 import useStyles from './style';
-import validation from '../components/validation';
+import validation from '../validation';
 
-
-interface Task {
-    guid: string,
-    title: string,
-    description: string
-    situation: string
-}
 const Edit: React.FC = () => { 
     const { register, handleSubmit, formState: { errors } } = useForm<Task>({
         resolver: yupResolver(validation)
     });
-    const [open, setOpen] = useState(true);
+    const [ open, setOpen ] = useState(true);
     const classes = useStyles();
     const router = useRouter();
     const { guid } : any = router.query;
@@ -46,33 +40,28 @@ const findTask = async (guid: string) => {
         situation: response.data.situation
     })
 };
-
 const updateModel = (e: ChangeEvent<HTMLInputElement>) => {
         setModel({
             ...model,
             [e.target.name] : e.target.value
         })
     };
-
 const formSubmitHandler: SubmitHandler<Task> = async () => {
         await Api.put(`/tasks`, model)
     closeModal()
 };
-
 const backlist = () => {
     router.push('/')   
 };
-
 const closeModal = () => {
     setOpen(false)
     backlist()
 }
-
 return(
         <>
        <Home/>                                                                                                                                                                                                                                                                      
        <Dialog open={open} aria-labelledby="form-dialog-title" maxWidth="sm">
-        <DialogTitle id="form-dialog-title"> Editar tarefa </DialogTitle>
+            <DialogTitle id="form-dialog-title"> Editar tarefa </DialogTitle>
         <DialogContent> 
         <form onSubmit={handleSubmit(formSubmitHandler)} className={classes.root} >
             <div>
@@ -109,7 +98,7 @@ return(
                         name="situation" 
                         value={model.situation} 
                         onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}>
-                    <FormControlLabel value="completed" control={<Radio />} label="Concluído" />
+                    <FormControlLabel value="completed" control={<Radio color='primary'/>} label="Concluído" />
                     </RadioGroup>
                 </FormControl>
 
@@ -118,7 +107,7 @@ return(
                         name="situation" 
                         value={model.situation} 
                         onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}>
-                    <FormControlLabel value="uncompleted" control={<Radio />} label="Em progresso" />
+                    <FormControlLabel value="uncompleted" control={<Radio color='primary'/>} label="Em progresso" />
                     </RadioGroup>  
                 </FormControl>            
               </div>
@@ -127,7 +116,7 @@ return(
         </form>
         </DialogContent>
       </Dialog>
-       </>
+    </>
     );
 }
 

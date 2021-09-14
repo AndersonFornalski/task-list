@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {IconButton, CardHeader, Card, Button, Menu, Fade, MenuItem, Grid, Input, FormLabel, Typography, Paper, InputBase, Divider, CardContent} from '@material-ui/core';
-import { MdCheck, MdDelete, MdDirections, MdEdit, MdMenu, MdMoreVert, MdSearch } from 'react-icons/md';
+import React, { MouseEvent, useEffect, useState } from 'react';
+import {IconButton, CardHeader, Card, Button, Menu, Fade, MenuItem, 
+        Grid, Typography, InputBase, CardContent} from '@material-ui/core';
+import { MdCheck, MdDelete,MdEdit, MdMoreVert, MdSearch } from 'react-icons/md';
 import { BiPlus} from 'react-icons/bi';
 import { useRouter } from 'next/dist/client/router';
-import Api from '../services/api';
+import { Task } from '../../services/interface';
+import Api from '../../services/api';
 import useStyle from './styles';
 
-interface Task {
-     guid: string,
-     title: string,
-     description: string,
-     situation: string
- }
- 
 const TaskList: React.FC = () => {
        const classes = useStyle();   
        const [ menuButton, setMenuButton ] = useState<null | HTMLElement>(null);
@@ -25,7 +20,7 @@ const TaskList: React.FC = () => {
  },[]);
  
 const getAll = async () => {
-   const response = await Api.get("/tasks");
+   const response = await Api.get("/tasks")
    setTasks(response.data);
  };
 const newTask = () => {
@@ -41,18 +36,16 @@ const deleteTask = async (guid: string) => {
   getAll()
   router.push('/');
 };
-const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  setMenuButton(event.currentTarget);
+const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  setMenuButton(e.currentTarget);
 };
 
 const handleClose = () => {
   setMenuButton(null);
 };
  return (
-   <>   
-  
+   <>     
    <Grid container direction="column" justifyContent="center" alignItems='center'>
-
    <div className={classes.search}>
       <IconButton className={classes.iconButton} aria-label="search">
         <MdSearch />
@@ -62,30 +55,29 @@ const handleClose = () => {
         placeholder="Procurar tarefas"
       />
     </div>    
-        <div className={classes.tarefas} >Tarefas</div> 
+    <div className={classes.tarefas} >Tarefas</div> 
      {tasks.map(item => (
       <Card key={item.guid} className={classes.root}>
          <CardHeader
          action={
           <>           
-         <IconButton onClick={handleClick} aria-label="settings" aria-controls="long-menu" aria-haspopup="true" >
+         <IconButton onClick={handleClick}className={classes.iconToggle} >
            <MdMoreVert className="iconMore"/>
          </IconButton>          
          </>
          }
-         title={ item.title}/>
+         title={item.title}/>
         
          <CardContent>
-         <Typography variant="body2" color="textSecondary" component="p">
+         <Typography className={classes.description} >
            {item.description}
           </Typography>
         </CardContent>
 
-
        {item.situation == 'completed' && 
-         <Button  className={classes.button}><MdCheck/>&nbsp;Concluido</Button> ||
+         <Button className={classes.button}><MdCheck/>&nbsp;Concluido</Button> ||
          item.situation == 'uncompleted' && 
-         <Button  className={classes.button}> Em progresso</Button>
+         <Button className={classes.button}> Em progresso</Button>
        }
        <Menu id="fade-menu" anchorEl={menuButton} keepMounted open={open} onClose={handleClose} TransitionComponent={Fade}>
          <MenuItem onClick={() => editTask(item.guid)}><MdEdit color='primary'/>&nbsp;Atualizar tarefa</MenuItem>{' '}
@@ -93,13 +85,13 @@ const handleClose = () => {
        </Menu>
       </Card>
      ))} 
-          <Button 
-              className={classes.newBtn} 
-              onClick={newTask} 
-              variant='contained' 
-              color='primary'>
-                <BiPlus/>&nbsp;Nova tarefa
-           </Button> 
+      <Button 
+          className={classes.newBtn} 
+          onClick={newTask} 
+          variant='contained' 
+          color='primary'>
+            <BiPlus/>&nbsp;Nova tarefa
+       </Button> 
       </Grid>
      
    </>   
