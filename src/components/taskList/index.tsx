@@ -61,7 +61,7 @@ const handleClose = () => {
          <CardHeader
          action={
           <>           
-         <IconButton onClick={handleClick}className={classes.iconToggle} >
+         <IconButton onClick={handleClick} className={classes.iconToggle}>
            <MdMoreVert className="iconMore"/>
          </IconButton>          
          </>
@@ -79,7 +79,7 @@ const handleClose = () => {
          item.situation == 'uncompleted' && 
          <Button className={classes.button}> Em progresso</Button>
        }
-       <Menu id="fade-menu" anchorEl={menuButton} keepMounted open={open} onClose={handleClose} TransitionComponent={Fade}>
+       <Menu anchorEl={menuButton} keepMounted open={open} onClose={handleClose} TransitionComponent={Fade}>
          <MenuItem onClick={() => editTask(item.guid)}><MdEdit color='primary'/>&nbsp;Atualizar tarefa</MenuItem>{' '}
          <MenuItem onClick={() => deleteTask(item.guid)}><MdDelete color='primary'/>&nbsp;Remover tarefa</MenuItem>
        </Menu>

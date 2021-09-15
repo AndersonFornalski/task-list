@@ -14,6 +14,8 @@ react-router-dom, react-hook-form, @hookform/resolvers e yup.
 
 ### Criando e testando GET, POST, PUT E DELETE.
 
+### Instalando @reduxjs/toolkit e react-redux.
+
 ### Dificuldades Encontradas
 Integracao do Styled-Components com Nextsjs no Drawer,
 Redux Toolkit,
